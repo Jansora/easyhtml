@@ -30,7 +30,6 @@ public class FileController {
     public ResultDto<List<PathDto>> getBooks() {
         String[] basePathArray = bookPaths.split(",");
         return ResultDto.SUCCESS( Arrays.stream(basePathArray)
-                .flatMap(s -> Arrays.stream((bookPaths.split(","))))
                 .map(dir -> fileUtils.listDir(dir, false, FileUtils.defaultFilter))
                 .flatMap(lst -> lst.stream())
                 .collect(Collectors.toList())

@@ -34,8 +34,6 @@ const Book = () => {
 
 
 
-
-
   useEffect(() => {
     dispatch({ type: 'chapter', payload: chapters})
   }, [chapters])
@@ -109,7 +107,7 @@ const Book = () => {
 
   };
 
-  console.log(book, chapter, chapters, renderTreeData(chapters))
+  console.log(book, chapters, renderTreeData(chapters))
   return <React.Fragment>
     <Aside style={{width: 500}}>
       {

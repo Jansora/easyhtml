@@ -62,7 +62,7 @@ const Chapter = () => {
       data.map(d => findNode(d.children, fileName))
   }
 
-  console.log("dsa", chapters)
+
 
   return <React.Fragment>
 

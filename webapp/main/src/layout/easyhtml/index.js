@@ -49,7 +49,7 @@ const EasyHtml = (props) => {
   const { dispatch } = useContext(GlobalStore);
 
   useEffect(() => {
-
+    console.log("ddaaaaaas", book, books.filter(dir => dir.fileName === book).length !== 0, books.filter(dir => dir.fileName === book))
     if (!!book && books.filter(dir => dir.fileName === book).length !== 0) {
       dispatch({ type: 'book', payload: books.filter(dir => dir.fileName === book)[0]})
     }
@@ -71,8 +71,8 @@ const EasyHtml = (props) => {
         <div className="padding" />
         <Dropdown
           loading={false}
-          onChange={(e, { value }) => history.push(value)  }
-          options={books.map(dir => {return {key: dir.fileName, text: dir.fileName, value: dir.fileName}})}
+          onChange={(e, { value }) => history.push(`/${value}`)  }
+          options={books.map((dir, index) => {return {key: index, text: dir.fileName, value: dir.fileName}})}
           placeholder='选择'
           search
           defaultValue={book}

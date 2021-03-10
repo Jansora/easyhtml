@@ -33,6 +33,9 @@ export const FetchChapters = (bookDir) => {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    setLoading(true)
+  }, [bookDir])
 
   useEffect(() => {
     if (loading && !!bookDir) {
