@@ -1,6 +1,6 @@
 module:
-  base-path: /Volumes/CCCOMA_X64F/极客时间/
-  http-prefix: http://geektime.localhost.jansora.com/file/
+  book-paths: /Volumes/Document/baiduyun/14-极客时间/01-专栏课/01-50,/Volumes/Document/baiduyun/14-极客时间/01-专栏课/051-99,/Volumes/Document/baiduyun/14-极客时间/01-专栏课/100-
+  http-prefix: http://geektime.localhost.jansora.com/file/14-极客时间/01-专栏课/01-50,http://geektime.localhost.jansora.com/file/14-极客时间/01-专栏课/051-99,http://geektime.localhost.jansora.com/file/14-极客时间/01-专栏课/100-,
 server:
   port: 43999
   servlet:

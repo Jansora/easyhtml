@@ -1,15 +1,19 @@
 package com.jansora.easyhtml.utils;
 
 import com.jansora.easyhtml.dto.PathDto;
+import com.jansora.easyhtml.exception.ErrorEnum;
+import com.jansora.easyhtml.resp.ResultDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -21,8 +25,27 @@ public class FileUtils {
     @Value("${module.http-prefix:/}")
     private String httpPrefix;
 
-    @Value("${module.base-path:/}")
-    private String basePath;
+    @Value("${module.book-paths:/}")
+    private String bookPaths;
+
+
+    private String convertPathToUrl(String path) {
+        String[] basePathArray = bookPaths.split(",");
+        String[] httpPrefixArray = httpPrefix.split(",");
+        String uri = "";
+        if (!StringUtils.hasLength(path) ||  Arrays.stream(basePathArray).noneMatch(basePath -> path.startsWith(basePath))) {
+            return "";
+        }
+
+        for (int i = 0; i < basePathArray.length; i++) {
+            if (path.startsWith(basePathArray[i])) {
+                uri = path.replace(basePathArray[i], httpPrefixArray[i]);
+                break;
+            }
+        }
+        return uri;
+
+    }
 
     public static Predicate<Path> defaultFilter =  path -> {
 
@@ -109,7 +132,7 @@ public class FileUtils {
             }
             return stream
                     .map(path -> new PathDto(path.getFileName().toString(),
-                            path.toFile().isDirectory() ? path.toFile().toString() : path.toString().replace(basePath, httpPrefix),
+                            path.toFile().isDirectory() ? path.toFile().toString() : convertPathToUrl(path.toString()),
                             path.toFile().isDirectory()))
                     .sorted()
                     .collect(Collectors.toList());
