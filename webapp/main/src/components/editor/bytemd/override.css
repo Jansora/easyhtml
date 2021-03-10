@@ -1,0 +1,18 @@
+.markdown-body {
+    height: 500px;
+    width: 100%;
+    overflow: auto;
+}
+.markdown-body > img {
+    max-height: 400px !important;
+}
+
+.bytemd-toolbar svg{
+
+    width: 24px;
+    height: 24px;
+}
+
+.bytemd-toolbar {
+    display: flex;
+}
