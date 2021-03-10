@@ -77,7 +77,8 @@ public class FileUtils {
      * @param predicates 过滤项
      * @return
      */
-    public List<PathDto> listDir(String dir, boolean recursion, Predicate<Path> ...predicates) {
+    @SafeVarargs
+    public final List<PathDto> listDir(String dir, boolean recursion, Predicate<Path>... predicates) {
 
         List<PathDto> paths = listDir(dir, predicates);
         if (recursion) {
@@ -98,18 +99,14 @@ public class FileUtils {
      * @param predicates 过滤项
      * @return
      */
-    public List<PathDto> listDir(String dir, Predicate<Path> ...predicates) {
+    @SafeVarargs
+    public final List<PathDto> listDir(String dir, Predicate<Path>... predicates) {
         Stream<Path> stream = null;
         try {
             stream = Files.list(Paths.get(dir));
             for (Predicate<Path> predicate : predicates) {
                 stream = stream.filter(predicate);
             }
-//    public PathDto(Path path) {
-//                this.fileName = path.getFileName().toString();
-//                this.filePath = path.toString();
-//                this.isDir = path.toFile().isDirectory();
-//            }
             return stream
                     .map(path -> new PathDto(path.getFileName().toString(),
                             path.toFile().isDirectory() ? path.toFile().toString() : path.toString().replace(basePath, httpPrefix),

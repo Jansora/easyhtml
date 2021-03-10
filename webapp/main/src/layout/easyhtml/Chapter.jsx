@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Tree} from 'antd';
 import {Section} from "../../components/styled/frameworks";
@@ -38,36 +38,39 @@ const Chapter = () => {
   const { chapter } = useParams();
 
   const { dispatch } = useContext(GlobalStore);
-  const Book = GetBook()
-  const Chapter = GetChapter()
+
+  const chapters = GetChapter()
+
+  const [current, setCurrent] = useState(null)
 
 
   useEffect(() => {
-    findNode(Book.children, chapter)
-  }, [Book, chapter])
+    findNode(chapters, chapter)
+  }, [chapters, chapter])
 
 
   const findNode = (data, fileName) => {
     if (!data ||  data.length === 0) return undefined;
 
-    console.log("data", data)
+    // console.log("data", data)
       const nodes = data.filter(d => d.fileName === fileName);
       if (nodes.length !== 0) {
-        dispatch({ type: 'chapter', payload: nodes[0]})
+        // dispatch({ type: 'chapter', payload: nodes[0]})
+        setCurrent(nodes[0])
         return ;
       }
       data.map(d => findNode(d.children, fileName))
   }
 
-  console.log("dsa", Book, Chapter)
+  console.log("dsa", chapters)
 
   return <React.Fragment>
 
 
       {
-        Chapter && Chapter.filePath &&
+        current && current.filePath &&
           <Wrapper >
-              <iframe src={Chapter.filePath} allowFullScreen />
+              <iframe src={current.filePath} allowFullScreen />
 
           </Wrapper>
       }

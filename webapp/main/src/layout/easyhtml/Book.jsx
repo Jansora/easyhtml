@@ -1,30 +1,65 @@
-import React, {useEffect, useState} from 'react';
-import {FetchDir} from "../../components/request/easyhtml";
+import React, {useContext, useEffect} from 'react';
+import {FetchBooks, FetchChapters} from "../../components/request/easyhtml";
 import {Route, Switch, useHistory, useParams} from "react-router-dom";
-import { Tree } from 'antd';
+import {Tree} from 'antd';
 import {Aside, Section} from "../../components/styled/frameworks";
 import GetBook from "../../components/hooks/getter/GetBook";
 import Chapter from "./Chapter";
+import {GlobalStore} from "../../components/store/global";
 
 const { DirectoryTree, TreeNode } = Tree;
 
 const Book = () => {
 
-  // const [dirs] = FetchDir();
 
-  const { chapter } = useParams();
 
-  const book = GetBook()
+  const { book, chapter } = useParams();
+
+
+
+
+
+
+  const Book = GetBook()
+
+
+
+
+  const [chapters] = FetchChapters(Book.filePath);
+
 
   const history = useHistory();
 
-  // const [module, setModule] = useState(null)
+  const { dispatch } = useContext(GlobalStore);
 
 
+
+
+
+  useEffect(() => {
+    dispatch({ type: 'chapter', payload: chapters})
+  }, [chapters])
+
+  //
   // useEffect(() => {
+  //   findNode(chapters, chapter)
+  // }, [chapters, chapter])
   //
-  // }, [module])
   //
+  // const findNode = (data, fileName) => {
+  //   if (!data ||  data.length === 0) return undefined;
+  //
+  //   // console.log("data", data)
+  //   const nodes = data.filter(d => d.fileName === fileName);
+  //   if (nodes.length !== 0) {
+  //     dispatch({ type: 'chapter', payload: nodes[0]})
+  //     // setCurrent(nodes[0])
+  //     return ;
+  //   }
+  //   data.map(d => findNode(d.children, fileName))
+  // }
+
+
   // useEffect(() => {
   //
   //   console.log(book, dirs, dirs.filter(dir => dir.fileName === book).length !== 0)
@@ -38,6 +73,17 @@ const Book = () => {
   //   }
   //
   // }, [book, dirs])
+
+  // useEffect(() => {
+  //
+  //   if (Book.fileName === book && !!Book.children) {
+  //     return ;
+  //   }
+  //
+  //   if (!!book && dirs.filter(dir => dir.fileName === book).length !== 0) {
+  //     dispatch({ type: 'book', payload: dirs.filter(dir => dir.fileName === book)[0]})
+  //   }
+  // }, [book, dirs, Book])
 
 
   const renderTreeData = (data) => {
@@ -57,29 +103,29 @@ const Book = () => {
     const {node} = info
 
     if (node.isLeaf) {
-      history.push(`/${book.fileName}/${node.title}`)
+      history.push(`/${Book.fileName}/${node.title}`)
     }
-
-    console.log('Trigger Select', keys, info);
-
 
 
   };
 
-
+  console.log(book, chapter, chapters, renderTreeData(chapters))
   return <React.Fragment>
     <Aside style={{width: 500}}>
       {
-        book.fileName &&
+        !!chapters && chapters.length !== 0 &&
         <DirectoryTree
           // multiple
           // showLine
           // showIcon={true}
+
+          style={{height: "100%"}}
+
           defaultExpandAll
           defaultSelectedKeys={[chapter]}
           onSelect={onSelect}
 
-          treeData={renderTreeData(book.children)}
+          treeData={renderTreeData(chapters)}
 
         />
       }

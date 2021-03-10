@@ -8,9 +8,7 @@ export const defaultValue = {
     book: {
 
     },
-    chapter: {
-
-    },
+    chapter: [],
     // 主题色
     theme: localStorage.getItem(THEME) ? localStorage.getItem(THEME) : 'violet',
     breadcrumb: [],

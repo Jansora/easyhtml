@@ -5,7 +5,7 @@ import {Head, LinkItem} from "../../components/styled/frameworks";
 import {Divider, Dropdown, Icon} from "semantic-ui-react";
 import styled from "styled-components";
 
-import {FetchDir} from "../../components/request/easyhtml";
+import {FetchBooks} from "../../components/request/easyhtml";
 import Book from "./Book";
 import {StyledDescription} from "../../components/styled/common";
 import {GlobalStore} from "../../components/store/global";
@@ -39,9 +39,10 @@ const EasyHtml = (props) => {
 
 
 
-  const [dirs] = FetchDir();
+  const [books] = FetchBooks();
 
   const { book } = useParams();
+
   const history = useHistory();
 
 
@@ -49,10 +50,10 @@ const EasyHtml = (props) => {
 
   useEffect(() => {
 
-    if (!!book && dirs.filter(dir => dir.fileName === book).length !== 0) {
-      dispatch({ type: 'book', payload: dirs.filter(dir => dir.fileName === book)[0]})
+    if (!!book && books.filter(dir => dir.fileName === book).length !== 0) {
+      dispatch({ type: 'book', payload: books.filter(dir => dir.fileName === book)[0]})
     }
-  }, [book, dirs])
+  }, [book, books])
 
   // console.log(data)
   return <React.Fragment>
@@ -71,7 +72,7 @@ const EasyHtml = (props) => {
         <Dropdown
           loading={false}
           onChange={(e, { value }) => history.push(value)  }
-          options={dirs.map(dir => {return {key: dir.fileName, text: dir.fileName, value: dir.fileName}})}
+          options={books.map(dir => {return {key: dir.fileName, text: dir.fileName, value: dir.fileName}})}
           placeholder='选择'
           search
           defaultValue={book}
