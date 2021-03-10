@@ -1,0 +1,7 @@
+module:
+  base-path: /Volumes/CCCOMA_X64F/极客时间/
+  http-prefix: http://geektime.localhost.jansora.com/file/
+server:
+  port: 43999
+  servlet:
+    context-path: /api
