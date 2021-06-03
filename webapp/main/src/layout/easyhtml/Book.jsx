@@ -1,13 +1,28 @@
 import React, {useContext, useEffect} from 'react';
-import {FetchBooks, FetchChapters} from "../../components/request/easyhtml";
+import {FetchChapters} from "../../components/request/easyhtml";
 import {Route, Switch, useHistory, useParams} from "react-router-dom";
 import {Tree} from 'antd';
-import {Aside, Section} from "../../components/styled/frameworks";
+import {Section} from "../../components/styled/frameworks";
 import GetBook from "../../components/hooks/getter/GetBook";
 import Chapter from "./Chapter";
 import {GlobalStore} from "../../components/store/global";
+import styled from "styled-components";
 
 const { DirectoryTree, TreeNode } = Tree;
+
+ const Aside = styled.aside`
+  //width: var(--aside-width);
+  width: ${props => props.Display === false ? "0" : "var(--aside-width)"};;
+  display: ${props => props.Display === false ? "none" : "flex"};
+  min-height: calc(100% - var(--header-height));
+  position: fixed;
+  padding: 8px 16px;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,.1);
+  right: ${props => props.right === true ? "0" : "flex"};
+  overflow: scroll;
+  //display: flex;
+  flex-direction: column;
+`
 
 const Book = () => {
 
@@ -109,7 +124,8 @@ const Book = () => {
 
   console.log(book, chapters, renderTreeData(chapters))
   return <React.Fragment>
-    <Aside style={{width: 500}}>
+
+    <Aside style={{width: 500}} right={true}>
       {
         !!chapters && chapters.length !== 0 &&
         <DirectoryTree
@@ -128,7 +144,7 @@ const Book = () => {
         />
       }
     </Aside>
-    <Section style={{marginLeft: 500, marginRight: 500}} marginRight={false}>
+    <Section style={{marginLeft: 500, marginRight: 500}} marginRight={true}>
       <Switch>
         <Route path="/:book/:chapter" component={Chapter} exact={false}/>
       </Switch>

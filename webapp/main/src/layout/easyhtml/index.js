@@ -1,13 +1,12 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useTitle} from "ahooks";
-import {NavLink, Redirect, Route, Switch, useParams, useHistory} from 'react-router-dom';
-import {Head, LinkItem} from "../../components/styled/frameworks";
-import {Divider, Dropdown, Icon} from "semantic-ui-react";
+import {Route, Switch, useHistory, useParams} from 'react-router-dom';
+import {Aside, Head, LinkItem} from "../../components/styled/frameworks";
+import {Dropdown} from "semantic-ui-react";
 import styled from "styled-components";
 
 import {FetchBooks} from "../../components/request/easyhtml";
 import Book from "./Book";
-import {StyledDescription} from "../../components/styled/common";
 import {GlobalStore} from "../../components/store/global";
 
 /**
@@ -83,7 +82,18 @@ const EasyHtml = (props) => {
       </StyledHeader>
 
     </Head>
-
+    <Aside>
+      {
+        books.map((item, index) => <LinkItem
+          to={`/${item.fileName}`}
+          key={item.fileName}
+          className={item.fileName === book ? 'active' : ''}
+        >
+          {/*<Icon name={item.fileName}/>*/}
+          {item.fileName}
+        </LinkItem>)
+      }
+    </Aside>
     <Switch>
       {/*<Redirect from="/" to="/:book"  exact={true} />*/}
       {/*<Route path="/:book" component={Book} exact={false}/>*/}

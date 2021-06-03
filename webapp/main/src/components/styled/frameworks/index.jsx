@@ -8,19 +8,28 @@
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 
-export const Aside = styled.aside`
+const AsideWrapper = styled.aside`
   //width: var(--aside-width);
   width: ${props => props.Display === false ? "0" : "var(--aside-width)"};;
   display: ${props => props.Display === false ? "none" : "flex"};
+  height: calc(100% - var(--header-height));
   min-height: calc(100% - var(--header-height));
   position: fixed;
-  padding: 8px 16px;
+  //padding: 8px 16px;
   box-shadow: 0 0 8px 0 rgba(0,0,0,.1);
   right: ${props => props.right === true ? "0" : "flex"};
-  overflow: scroll;
+  //overflow: scroll;
   //display: flex;
   flex-direction: column;
 `
+export const Aside = (props) => {
+  return <AsideWrapper right={props.right} Display={props.Display} >
+    <div style={{overflowY: "auto", padding: "8px 16px 8px 16px"}} {...props} >
+
+    </div>
+  </AsideWrapper>
+}
+
 
 export const Item = styled.div`
   height: 33px;
