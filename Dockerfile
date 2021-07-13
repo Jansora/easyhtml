@@ -1,4 +1,4 @@
-FROM jansora/base:v1
+FROM jansora/spring
 
 ENV version 1.0
 
