@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: easyhtml
-  replicas: 2
+  replicas: 1
 #spec:
 #  restartPolicy: Always
   template:
@@ -19,24 +19,34 @@ spec:
     spec:
       containers:
       - name: easyhtml
-        image: jansora/easyhtml:v1
+        image: jansora/easyhtml
         imagePullPolicy: Never
-        command: ['sh']
-        args: ["service nginx start && java -Xms128M -Xmx128M -jar easyhtml.jar"]
+#        command: ['ls -l && java -Xms128M -Xmx128M -jar /app/easyhtml.jar']
+#        command: ["java", "-Xms128M", "-Xmx128M", "-jar",  "/app/easyhtml.jar"]
+        command: ["sh", "/app/entrypoint.sh"]
+
+        #          args: ["service nginx start && java -Xms128M -Xmx128M -jar /app/easyhtml.jar"]
+#        args: ["ls -l"]
         workingDir: /app
         env:
         - name: str
           value: "/etc/run.sh"
 
         ports:
-        - containerPort: 80
+        - containerPort: 43999
           name: nginx
           protocol: TCP
         volumeMounts:
         - name: tmp #挂载设备的名字，与volumes[*].name 需要对应
           mountPath: /app/tmp #挂载到容器的某个路径下
           readOnly: False
+        - name: geektime #挂载设备的名字，与volumes[*].name 需要对应
+          mountPath: /app/geektime #挂载到容器的某个路径下
+          readOnly: False
       volumes: #定义一组挂载设备
+        - name: geektime #定义一个挂载设备的名字
+          hostPath:
+            path: /Users/jansora/Documents/geektime #挂载设备类型为hostPath，路径为宿主机下的/opt,这里设备类型支持很多种
         - name: tmp #定义一个挂载设备的名字
           hostPath:
-            path: /Users/jansora/tmp #挂载设备类型为hostPath，路径为宿主机下的/opt,这里设备类型支持很多种
+            path: /Users/jansora/tmp/kubernates #挂载设备类型为hostPath，路径为宿主机下的/opt,这里设备类型支持很多种

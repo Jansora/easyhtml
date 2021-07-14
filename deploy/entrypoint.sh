@@ -1,0 +1,1 @@
+service nginx start && java -Xms128M -Xmx128M -jar /app/easyhtml.jar
