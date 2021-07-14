@@ -38,10 +38,10 @@ spec:
           protocol: TCP
         volumeMounts:
         - name: tmp #挂载设备的名字，与volumes[*].name 需要对应
-          mountPath: /app/tmp #挂载到容器的某个路径下
+          mountPath: /data/tmp #挂载到容器的某个路径下
           readOnly: False
         - name: geektime #挂载设备的名字，与volumes[*].name 需要对应
-          mountPath: /app/geektime #挂载到容器的某个路径下
+          mountPath: /data/geektime #挂载到容器的某个路径下
           readOnly: False
       volumes: #定义一组挂载设备
         - name: geektime #定义一个挂载设备的名字

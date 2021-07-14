@@ -1,5 +1,6 @@
 module:
-  book-paths: /Volumes/Document/baiduyun/14-极客时间/01-专栏课/01-50,/Volumes/Document/baiduyun/14-极客时间/01-专栏课/051-99,/Volumes/Document/baiduyun/14-极客时间/01-专栏课/100-
+  book-paths: /app/geektime/01-专栏课/01-50,/app/geektime/01-专栏课/051-99,/app/geektime/01-专栏课/100-
+#  book-paths: /Volumes/Document/baiduyun/14-极客时间/01-专栏课/01-50,/Volumes/Document/baiduyun/14-极客时间/01-专栏课/051-99,/Volumes/Document/baiduyun/14-极客时间/01-专栏课/100-
   http-prefix: http://geektime.localhost.jansora.com/file/14-极客时间/01-专栏课/01-50,http://geektime.localhost.jansora.com/file/14-极客时间/01-专栏课/051-99,http://geektime.localhost.jansora.com/file/14-极客时间/01-专栏课/100-,
 server:
   port: 43999
