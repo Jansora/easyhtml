@@ -104,6 +104,7 @@ public class FileUtils {
     public final List<PathDto> listDir(String dir, boolean recursion, Predicate<Path>... predicates) {
 
         List<PathDto> paths = listDir(dir, predicates);
+        System.out.println("listDir: " + dir + ": " +  paths.toString());
         if (recursion) {
             for (PathDto path: paths) {
                 if (path.isDir()) {

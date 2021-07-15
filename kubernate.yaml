@@ -29,8 +29,8 @@ spec:
 #        args: ["ls -l"]
         workingDir: /app
         env:
-        - name: str
-          value: "/etc/run.sh"
+        - name: LANG
+          value: "en_US.UTF-8"
 
         ports:
         - containerPort: 43999

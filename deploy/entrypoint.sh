@@ -1,1 +1,1 @@
-service nginx start && java -Xms128M -Xmx128M -jar /app/easyhtml.jar
+service nginx start && java -Dsun.jnu.encoding=UTF-8 -Dfile.encoding=UTF-8 -Xms128M -Xmx128M -jar /app/easyhtml.jar
