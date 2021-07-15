@@ -1,7 +1,8 @@
 module:
-  book-paths: /data/geektime/01-专栏课/
+#  book-paths: /data/geektime/01-专栏课/
+  book-paths: /Users/jansora/Documents/geektime/01-专栏课/
 #  book-paths: /Volumes/Document/baiduyun/14-极客时间/01-专栏课/01-50,/Volumes/Document/baiduyun/14-极客时间/01-专栏课/051-99,/Volumes/Document/baiduyun/14-极客时间/01-专栏课/100-
-  http-prefix: http://geektime.localhost.jansora.com/file/14-极客时间/01-专栏课/
+  http-prefix: /file/01-专栏课/
 server:
   port: 43999
   servlet:

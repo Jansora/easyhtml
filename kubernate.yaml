@@ -34,6 +34,7 @@ spec:
 
         ports:
         - containerPort: 43999
+          nodePort: 43999
           name: nginx
           protocol: TCP
         volumeMounts:
