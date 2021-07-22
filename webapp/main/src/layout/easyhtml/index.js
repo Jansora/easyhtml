@@ -48,7 +48,7 @@ const EasyHtml = (props) => {
   const { dispatch } = useContext(GlobalStore);
 
   useEffect(() => {
-    console.log("ddaaaaaas", book, books.filter(dir => dir.fileName === book).length !== 0, books.filter(dir => dir.fileName === book))
+    // console.log("ddaaaaaas", book, books.filter(dir => dir.fileName === book).length !== 0, books.filter(dir => dir.fileName === book))
     if (!!book && books.filter(dir => dir.fileName === book).length !== 0) {
       dispatch({ type: 'book', payload: books.filter(dir => dir.fileName === book)[0]})
     }

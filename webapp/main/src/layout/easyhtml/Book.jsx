@@ -125,7 +125,7 @@ const Book = () => {
   console.log(book, chapters, renderTreeData(chapters))
   return <React.Fragment>
 
-    <Aside style={{width: 500}} right={true}>
+    <Aside style={{width: 350}} right={true}>
       {
         !!chapters && chapters.length !== 0 &&
         <DirectoryTree
@@ -144,7 +144,7 @@ const Book = () => {
         />
       }
     </Aside>
-    <Section style={{marginLeft: 500, marginRight: 500}} marginRight={true}>
+    <Section style={{marginLeft: '250px', marginRight: '350px'}} marginRight={true}>
       <Switch>
         <Route path="/:book/:chapter" component={Chapter} exact={false}/>
       </Switch>
