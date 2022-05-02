@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class FileController {
         String[] basePathArray = bookPaths.split(",");
         return ResultDto.SUCCESS( Arrays.stream(basePathArray)
                 .map(dir -> fileUtils.listDir(dir, false, FileUtils.defaultFilter))
-                .flatMap(lst -> lst.stream())
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList())
         );
 //        return ResultDto.SUCCESS(fileUtils.listDir(basePath, false, FileUtils.defaultFilter));
@@ -40,7 +41,7 @@ public class FileController {
     public ResultDto<List<PathDto>> getChapters(String bookDir) {
         String[] basePathArray = bookPaths.split(",");
 
-        if (!StringUtils.hasLength(bookDir) ||  Arrays.stream(basePathArray).noneMatch(basePath -> bookDir.startsWith(basePath))) {
+        if (!StringUtils.hasLength(bookDir) ||  Arrays.stream(basePathArray).noneMatch(bookDir::startsWith)) {
             return ResultDto.FAIL(ErrorEnum.NotFound, "参数格式不符和");
         }
         return ResultDto.SUCCESS(fileUtils.listDir(bookDir , true, FileUtils.defaultFilter));
