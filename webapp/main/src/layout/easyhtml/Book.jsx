@@ -6,6 +6,7 @@ import {Tree} from 'antd';
 import styled from "styled-components";
 import {GlobalStore} from "@jansora/global/es/store/global";
 import Chapter from "./Chapter";
+import SetTitle from "@jansora/material/es/hooks/setter/SetTitle";
 
 const { DirectoryTree } = Tree;
 
@@ -24,27 +25,6 @@ const { DirectoryTree } = Tree;
 
 `
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: calc(100vh - var(--header-height));
-  //margin-left: 250px;
-  //margin-top: 40px;
-  //margin: 0 auto;
-  overflow: hidden;
-  > i {
-    position: fixed;
-    cursor: pointer;
-    right: 10px;
-    top: 60px;
-  }
-  iframe {
-    width: 100%;
-    height: 100%;
-    overflow:scroll;
-    border: none;
-    padding: 0 20px;
-  }
-`
  const Section = styled.section`
    margin-left: 500px;
    padding: 16px 16px 8px 8px;
@@ -68,9 +48,8 @@ const Book = () => {
   const [_chapter, setChapter] = useState(null);
 
 
-  // useEffect(() => {
-  //   dispatch({ type: 'chapter', payload: chapters})
-  // }, [chapters])
+  SetTitle(book)
+
 
   const renderTreeData = (data) => {
 
@@ -98,7 +77,7 @@ const Book = () => {
 
 
 
-  console.log(book, chapters)
+  // console.log("bbc", book, chapter, chapters)
 
   return <React.Fragment>
 
