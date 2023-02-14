@@ -1,103 +1,76 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useState} from 'react';
 import {FetchChapters} from "../../components/request/easyhtml";
-import {Route, Switch, useHistory, useParams} from "react-router-dom";
+import {Route, Routes, useNavigate, useParams} from "react-router-dom";
 import {Tree} from 'antd';
-import {Section} from "../../components/styled/frameworks";
-import GetBook from "../../components/hooks/getter/GetBook";
-import Chapter from "./Chapter";
-import {GlobalStore} from "../../components/store/global";
+// import {Section} from "../../components/styled/frameworks";
 import styled from "styled-components";
+import {GlobalStore} from "@jansora/global/es/store/global";
+import Chapter from "./Chapter";
 
-const { DirectoryTree, TreeNode } = Tree;
+const { DirectoryTree } = Tree;
 
  const Aside = styled.aside`
-  //width: var(--aside-width);
-  width: ${props => props.Display === false ? "0" : "var(--aside-width)"};;
-  display: ${props => props.Display === false ? "none" : "flex"};
-  min-height: calc(100% - var(--header-height));
   position: fixed;
-  padding: 8px 16px;
-  box-shadow: 0 0 8px 0 rgba(0,0,0,.1);
-  right: ${props => props.right === true ? "0" : "flex"};
-  overflow: scroll;
-  //display: flex;
+  top: var(--header-height);
+  bottom: var(--footer-height);
+  height: calc(100% - var(--header-height) - var(--footer-height));
+   
+  display: flex;
   flex-direction: column;
+  
+  background-color: var(--background-color-1);
+  padding: 8px 0 8px 16px;
+   
+
+`
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - var(--header-height));
+  //margin-left: 250px;
+  //margin-top: 40px;
+  //margin: 0 auto;
+  overflow: hidden;
+  > i {
+    position: fixed;
+    cursor: pointer;
+    right: 10px;
+    top: 60px;
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+    overflow:scroll;
+    border: none;
+    padding: 0 20px;
+  }
+`
+ const Section = styled.section`
+   margin-left: 500px;
+   padding: 16px 16px 8px 8px;
 `
 
 const Book = () => {
-
 
 
   const { book, chapter } = useParams();
 
 
 
+  const [chapters] = FetchChapters('/data/geektime/01-专栏课/' + book);
 
 
-
-  const Book = GetBook()
-
-
-
-
-  const [chapters] = FetchChapters(Book.filePath);
-
-
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { dispatch } = useContext(GlobalStore);
 
 
-
-  useEffect(() => {
-    dispatch({ type: 'chapter', payload: chapters})
-  }, [chapters])
-
-  //
-  // useEffect(() => {
-  //   findNode(chapters, chapter)
-  // }, [chapters, chapter])
-  //
-  //
-  // const findNode = (data, fileName) => {
-  //   if (!data ||  data.length === 0) return undefined;
-  //
-  //   // console.log("data", data)
-  //   const nodes = data.filter(d => d.fileName === fileName);
-  //   if (nodes.length !== 0) {
-  //     dispatch({ type: 'chapter', payload: nodes[0]})
-  //     // setCurrent(nodes[0])
-  //     return ;
-  //   }
-  //   data.map(d => findNode(d.children, fileName))
-  // }
+  const [_chapter, setChapter] = useState(null);
 
 
   // useEffect(() => {
-  //
-  //   console.log(book, dirs, dirs.filter(dir => dir.fileName === book).length !== 0)
-  //   if(!book) {
-  //     return ;
-  //   }
-  //
-  //   if (dirs.filter(dir => dir.fileName === book).length !== 0) {
-  //     setModule(dirs.filter(dir => dir.fileName === book)[0])
-  //     console.log(dirs.filter(dir => dir.fileName === book)[0], "module")
-  //   }
-  //
-  // }, [book, dirs])
-
-  // useEffect(() => {
-  //
-  //   if (Book.fileName === book && !!Book.children) {
-  //     return ;
-  //   }
-  //
-  //   if (!!book && dirs.filter(dir => dir.fileName === book).length !== 0) {
-  //     dispatch({ type: 'book', payload: dirs.filter(dir => dir.fileName === book)[0]})
-  //   }
-  // }, [book, dirs, Book])
-
+  //   dispatch({ type: 'chapter', payload: chapters})
+  // }, [chapters])
 
   const renderTreeData = (data) => {
 
@@ -116,39 +89,52 @@ const Book = () => {
     const {node} = info
 
     if (node.isLeaf) {
-      history.push(`/${Book.fileName}/${node.title}`)
+      setChapter(node)
+      navigate(`/${book}/${node.title}`)
     }
 
 
   };
 
-  console.log(book, chapters, renderTreeData(chapters))
+
+
+  console.log(book, chapters)
+
   return <React.Fragment>
 
-    <Aside style={{width: 350}} right={true}>
-      {
-        !!chapters && chapters.length !== 0 &&
-        <DirectoryTree
-          // multiple
-          // showLine
-          // showIcon={true}
+    <Aside style={{width: 500}} right={false}>
+      <div style={{display: "fixed", overflowY: "auto"}}>
+        {
+            !!chapters && chapters.length !== 0 &&
+            <DirectoryTree
+                style={{height: "100%"}}
 
-          style={{height: "100%"}}
+                defaultExpandAll
+                defaultSelectedKeys={[chapter]}
+                onSelect={onSelect}
 
-          defaultExpandAll
-          defaultSelectedKeys={[chapter]}
-          onSelect={onSelect}
+                treeData={renderTreeData(chapters)}
 
-          treeData={renderTreeData(chapters)}
+            />
+        }
+      </div>
 
-        />
-      }
     </Aside>
-    <Section style={{marginLeft: '250px', marginRight: '350px'}} marginRight={true}>
-      <Switch>
-        <Route path="/:book/:chapter" component={Chapter} exact={false}/>
-      </Switch>
+
+
+
+    {/*<Aside style={{width: 350}} right={false}>*/}
+
+    {/*</Aside>*/}
+    <Section style={{marginLeft: '500px'}} marginRight={true}>
+      <Routes>
+        <Route path=":chapter" element={<Chapter chapters={chapters} />} />
+        {/*<Route path="/:book/:chapter" component={Chapter} exact={false}/>*/}
+      </Routes>
+
+
     </Section>
+
   </React.Fragment>
 }
 

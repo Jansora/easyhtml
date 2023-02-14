@@ -1,13 +1,13 @@
 import React, {useContext, useEffect} from 'react';
 import {useTitle} from "ahooks";
-import {Route, Switch, useHistory, useParams} from 'react-router-dom';
-import {Aside, Head, LinkItem} from "../../components/styled/frameworks";
+import {Route, useParams} from 'react-router-dom';
+import {Aside, LinkItem} from "../../components/styled/frameworks";
 import {Dropdown} from "semantic-ui-react";
-import styled from "styled-components";
 
 import {FetchBooks} from "../../components/request/easyhtml";
 import Book from "./Book";
 import {GlobalStore} from "../../components/store/global";
+import StyledHeader from "@jansora/material/es/components/styled/StyledHeader";
 
 /**
  * <Description> <br>
@@ -15,22 +15,7 @@ import {GlobalStore} from "../../components/store/global";
  * @author zhang.yangyuan (jansora)
  2020/12/26 23:30:35
  */
-const StyledHeader = styled.header`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  //height: 100%;
-  z-index: 1;
-  h3 {
-    margin-right: 20px;
-  }
-  a {
-    margin-right: 10px;
-  }
-  div.padding {
-    flex: 1 1 auto;
-  }
-`
+
 
 const EasyHtml = (props) => {
 
@@ -42,13 +27,11 @@ const EasyHtml = (props) => {
 
   const { book } = useParams();
 
-  const history = useHistory();
 
 
   const { dispatch } = useContext(GlobalStore);
 
   useEffect(() => {
-    // console.log("ddaaaaaas", book, books.filter(dir => dir.fileName === book).length !== 0, books.filter(dir => dir.fileName === book))
     if (!!book && books.filter(dir => dir.fileName === book).length !== 0) {
       dispatch({ type: 'book', payload: books.filter(dir => dir.fileName === book)[0]})
     }
@@ -56,7 +39,7 @@ const EasyHtml = (props) => {
 
   // console.log(data)
   return <React.Fragment>
-    <Head>
+
       <StyledHeader>
         <h3 style={{marginRight: 50}}>
           Easy Html
@@ -81,7 +64,6 @@ const EasyHtml = (props) => {
         />
       </StyledHeader>
 
-    </Head>
     <Aside>
       {
         books.map((item, index) => <LinkItem

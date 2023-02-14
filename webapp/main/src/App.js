@@ -1,49 +1,39 @@
 import React from 'react';
-import styled from "styled-components";
-import Hooks from "./components/hooks";
-import {configResponsive} from 'ahooks';
-import EasyHtml from "./layout/easyhtml";
-import {Route, Switch} from "react-router-dom";
+import MaterialApp from "@jansora/material/es/MaterialApp";
+import MaterialLayout from "@jansora/material/es/layout/MaterialLayout";
+import MaterialFooter from "@jansora/material/es/layout/footer/MaterialFooter";
+import MountGlobal from "@jansora/global/lib/mount";
+import StyledLayout from "@jansora/material/es/components/styled/StyledLayout";
+import MaterialAside from "@jansora/material/es/layout/aside/MaterialAside";
+import Header from "./layout/Header";
+import {Route, Routes} from "react-router-dom";
 import Book from "./layout/easyhtml/Book";
-
-configResponsive({
-  small: 0,
-  middle: 800,
-  large: 1200,
-});
-
-
-
-const LayoutWrapper = styled.main`
-  padding-top: var(--header-height);
-  height: 100%;
-
-   ;
-  transition:  margin-left 500ms;
-
-  > header {
-    z-index: 1;
-    width: 100vw;
-    transition: width 500ms;
-  }
-`;
-
 
 const App = () => {
 
   return (
-      <React.Fragment>
-        <LayoutWrapper >
+      <MaterialApp>
+          <MountGlobal />
+          <MaterialLayout>
+              <Header />
+              <MaterialAside />
+              <StyledLayout id="layout">
+                  <Routes >
+                      {/*<Route path="/play/*" element={<EasyHtml />} />*/}
+                      {/*<Route path="/book/*" element={<EasyHtml />} />*/}
+                      <Route path=":book/*" element={<Book />} />
+                  </Routes>
+              </StyledLayout>
+              <MaterialFooter/>
+          </MaterialLayout>
 
-          <Hooks />
+          {/*<Switch>*/}
+          {/*  <Route path="/:book/:chapter" component={EasyHtml} exact={false}/>*/}
+          {/*  <Route path="/:book" component={EasyHtml} exact={false}/>*/}
+          {/*  <Route path="/" component={EasyHtml} exact={false}/>*/}
+          {/*</Switch>*/}
 
-          <Switch>
-            <Route path="/:book/:chapter" component={EasyHtml} exact={false}/>
-            <Route path="/:book" component={EasyHtml} exact={false}/>
-            <Route path="/" component={EasyHtml} exact={false}/>
-          </Switch>
-        </LayoutWrapper>
-      </React.Fragment>
+      </MaterialApp>
   );
 }
 

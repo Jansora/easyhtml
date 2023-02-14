@@ -1,11 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Tree} from 'antd';
-import {Section} from "../../components/styled/frameworks";
-import GetBook from "../../components/hooks/getter/GetBook";
 import {GlobalStore} from "../../components/store/global";
-import GetChapter from "../../components/hooks/getter/GetChapter";
-import IFrameWrapper from "../../components/view/IFrameWrapper";
 import styled from "styled-components";
 
 const { DirectoryTree, TreeNode } = Tree;
@@ -32,21 +28,23 @@ const Wrapper = styled.div`
   }
 `
 
-const Chapter = () => {
+const Chapter = ({chapters}) => {
 
 
   const { chapter } = useParams();
 
   const { dispatch } = useContext(GlobalStore);
 
-  const chapters = GetChapter()
+  // const chapters = GetChapter()
 
   const [current, setCurrent] = useState(null)
 
 
   useEffect(() => {
-    findNode(chapters, chapter)
-  }, [chapters, chapter])
+    console.log("find", chapters, chapter)
+      findNode(chapters, chapter)
+  }, [chapter, chapters])
+
 
 
   const findNode = (data, fileName) => {
@@ -63,6 +61,7 @@ const Chapter = () => {
   }
 
 
+  console.log("xxa", chapters)
 
   return <React.Fragment>
 
