@@ -13,7 +13,7 @@
     "@jansora/monaco": "1.16.1",
     "@jansora/bytemd": "1.11.2",
     "@jansora/global": "1.13.11",
-    "@jansora/material": "1.14.12",
+    "@jansora/material": "1.14.13",
     "qs": "^6.10.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
